@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load table_operations %}
+{% block head_title %}{{object.name}}{% endblock %}
+{% block content %}
+
+<h2>Active business</h2>
+<a class="btn btn-outline-info btn-sm" href="{% url 'sell:sell-create' %}">Create new</a>
+
+    <table id="mydatatable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th scope="col">Converter</th>
+          <th scope="col">Film</th>
+          <th scope="col">T pa</th>
+          <th scope="col">Price</th>
+          <th scope="col">EUR</th>
+         <th scope="col">E.U.</th>
+          <th scope="col">Discription</th>
+        </tr>
+      </thead>
+      <tbody>
+  {% for i in active_list %}
+        <tr>
+          <td><a href="{% url 'customer:customer-detail' i.sell.converter.id %}">{{ i.sell.converter }} </td>
+          <td><a href="{% url 'product:product-detail' i.product.id %}/">{{ i.product.name }}</td>
+          <td> {{ i.quantity }} </td>
+          <td> {{ i.price }} </td>
+          <td> {{ i.price|mult:i.quantity }} </td>
+          <td> {{ i.enduser }} </td>
+          <td> {{ i.description }} </td>
+        </tr>
+  {% endfor %}
+  </tbody>
+         <tfoot>
+             <tr>
+               <th scope="col">Converter</th>
+               <th scope="col">Film</th>
+               <th scope="col">T pa</th>
+               <th scope="col">Price</th>
+               <th scope="col">EUR</th>
+               <th scope="col">E.U.</th>
+               <th scope="col">Discription</th>
+              </tr>
+         </tfoot>
+     </table>
+
+</div>
+
+{% endblock %}

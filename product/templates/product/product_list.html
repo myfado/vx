@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h4>Product</h4>
+<a class="btn btn-outline-info btn-sm" href="{% url 'product:product-create' %}">Create new</a>
+
+  <table id="mydatatable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Family</th>
+        <th scope="col">Group</th>
+        <th scope="col">Producer</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for prod in object_list %}
+      <tr>
+        <td><a href="{% url 'product:product-detail' prod.id %}/">{{ prod.name }}</td>
+        <td>{{ prod.family }}</td>
+        <td>{{ prod.group }}</td>
+        <td>{{ prod.producer }}</td>
+      </tr>
+{% endfor %}
+</tbody>
+
+   </table>
+
+{% endblock %}

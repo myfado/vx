@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load table_operations %}
+{% block head_title %}{{object.name}}{% endblock %}
+{% block content %}
+
+<h2>{{ object.customer }} business</h2>
+<table class="table table-sm">
+   <thead>
+     <tr>
+       <th class="table-primary">Converter</th>
+       <th class="table-success">Purchased on</th>
+       <th class="table-secondary">Updated</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr>
+       <td class="table-primary">{{ object.converter }} </td>
+       <td class="table-success">{{object.created_at}}</td>
+       <td class="table-secondary">{{object.updated_at}}</td>
+     </tr>
+   </tbody>
+ </table>
+    <table id="mydatatable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th scope="col">Film</th>
+          <th scope="col">E.U.</th>
+          <th scope="col">q-ty</th>
+          <th scope="col">Price</th>
+          <th scope="col">EUR</th>
+          <th scope="col">Description</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+  {% for i in sell_object_list %}
+        <tr>
+          <td><a href="{% url 'product:product-detail' i.product.id %}/">{{ i.product.name }}</td>
+          <td> {{ i.enduser }} </td>
+          <td> {{ i.quantity }} </td>
+          <td> {{ i.price}} </td>
+          <td> {{ i.price|mult:i.quantity}} </td>
+          <td> {{ i.description }} </td>
+          <td>   {% if i.discontinued == True %}
+            stopped {% endif %}</td>
+
+        </tr>
+  {% endfor %}
+  </tbody>
+         <tfoot>
+             <tr>
+               <th scope="col">Film</th>
+               <th scope="col">E.U.</th>
+               <th scope="col">q-ty</th>
+               <th scope="col">Price</th>
+               <th scope="col">EUR</th>
+               <th scope="col">Description</th>
+               <th scope="col"></th>
+              </tr>
+         </tfoot>
+     </table>
+
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+  <a class="btn btn-outline-warning btn-sm" href="{% url 'sell:sell-update' object.id %}">Update</a>
+  <a class="btn btn-outline-danger btn-sm" href="{% url 'sell:sell-delete' object.id %}">Delete</a>
+  <a class="btn btn-outline-info btn-sm" href="{% url 'sell:sell-list' %}">To per converter list</a>
+  <a class="btn btn-outline-info btn-sm" href="{% url 'sell:active-list' %}">To active list</a>
+</div>
+</div>
+
+{% endblock %}

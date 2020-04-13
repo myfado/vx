@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load table_operations %}
+{% block head_title %}{{object.l_name}}{% endblock %}
+{% block content %}
+
+<h4>Customer details</h4>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+  <a class="btn btn-outline-warning btn-sm" href="{% url 'customer:customer-update' object.id %}">Update</a>
+  <a class="btn btn-outline-danger btn-sm" href="{% url 'customer:customer-delete' object.id %}">Delete</a>
+  <a class="btn btn-outline-info btn-sm" href="{% url 'customer:customer-list' %}">Back to Customer List</a>
+</div>
+</div>
+<table class="table table-sm">
+   <thead>
+     <tr>
+       <th style="width: 10%" class="table-primary">C-ry</th>
+       <th style="width: 20%" class="table-success">Name</th>
+       <th style="width: 10%" class="table-dark">Stat</th>
+       <th style="width: 10%" class="table-danger">Cat</th>
+       <th class="table-warning">issue</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr>
+       <td class="table-primary">{{ object.country }} </td>
+       <td class="table-success">{{object.name}}</td>
+       <td class="table-dark">{{object.get_status_display }}</td>
+       <td class="table-danger">{{object.category}}</td>
+       <td class="table-warning">{{object.issue}}</td>
+     </tr>
+   </tbody>
+ </table>
+
+
+
+ <h4>{{object.name}}'s business history:</h4>
+ <table id="mydatatable" class="display" style="width:100%">
+   <thead>
+     <tr>
+       <th scope="col">Film</th>
+       <th scope="col">Enduser</th>
+       <th scope="col">T pa</th>
+       <th scope="col">Price</th>
+       <th scope="col">EUR</th>
+       <th scope="col"></th>
+     </tr>
+   </thead>
+   <tbody>
+ {% for i in prods %}
+     <tr>
+       <td>{{ i.product.name }}</td>
+       <td>{{ i.enduser.name }}</td>
+       <td>{{ i.quantity }}</td>
+       <td>{{ i.price }}</td>
+       <td>{{ i.price|mult:i.quantity }}</td>
+         {% if i.discontinued == True %}
+         <td> discontinued!</td>
+         {% else %}
+         <td></td>
+         {% endif %}
+     </tr>
+ {% endfor %}
+ </tbody>
+      <tfoot>
+          <tr>
+            <th scope="col">Film</th>
+            <th scope="col">Enduser</th>
+            <th scope="col">T pa</th>
+            <th scope="col">Price</th>
+            <th scope="col">EUR</th>
+            <th scope="col"></th>
+          </tr>
+      </tfoot>
+  </table>
+  <h4>{{object.name}} Projects:</h4>
+  <table id="mydatatable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th scope="col">Film</th>
+        <th scope="col">T pa</th>
+        <th scope="col">Price</th>
+        <th scope="col">Back-par</th>
+        <th scope="col">Application</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for i in proj_product_list %}
+      <tr>
+        <td>{{ i.product.name }}</td>
+        <td>{{ i.quantity }}</td>
+        <td>{{ i.price }}</td>
+        <td>{{ i.back_partner.name }}</td>
+        <td>{{ i.application }}</td>
+        {% if i.discontinued == True %}
+          <td> discontinued!</td>
+          {% else %}
+          <td></td>
+          {% endif %}
+      </tr>
+  {% endfor %}
+  </tbody>
+   </table>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h4>Customers:</h4>
+  <table id="mydatatable" class="table table-striped table-bordered mydatatable" style="width:100%">
+    <thead>
+      <tr>
+        <th style="width: 10%">C-ry</th>
+        <th scope="col">Name</th>
+        <th style="width: 10%">Stat</th>
+        <th style="width: 10%">Cat</th>
+        <th scope="col">Issue</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for cust in object_list %}
+      <tr>
+        <td>{{ cust.country }}</td>
+        <td><a href="{% url 'customer:customer-detail' cust.id %}">{{ cust.name }}</td>
+        <td>{{ cust.status }}</td>
+        <td>{{ cust.category }}</td>
+        <td>{{ cust.issue }}</td>
+      </tr>
+{% endfor %}
+    </tbody>
+   </table>
+
+<a class="btn btn-outline-primary btn-sm" href="{% url 'customer:customer-create' %}">Create</a>
+
+{% endblock %}

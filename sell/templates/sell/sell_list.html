@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load table_operations %}
+{% block content %}
+
+<h4>Sales</h4>
+<a class="btn btn-outline-info btn-sm" href="{% url 'sell:sell-create' %}">Create new</a>
+
+  <table id="mydatatable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th scope="col">Converter</th>
+        <th scope="col">Created Y-M-D</th>
+        <th scope="col">Modified Y-M-D</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for sale in object_list %}
+      <tr>
+        <td><a href="{% url 'sell:sell-detail' sale.id %}">{{ sale.converter }}</td>
+        <td>{{ sale.created_at|date:'y-m-d' }}</td>
+        <td>{{ sale.updated_at|date:'y-m-d'  }}</td>
+      </tr>
+{% endfor %}
+</tbody>
+
+   </table>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load table_operations %}
+{% block content %}
+
+<h4>Projects</h4>
+<a class="btn btn-outline-info btn-sm" href="{% url 'purchase:purchase-create' %}">Create new</a>
+
+  <table id="mydatatable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th scope="col">Conv</th>
+        <th scope="col">Film</th>
+        <th scope="col">T pa</th>
+        <th scope="col">price</th>
+        <th scope="col">EUR</th>
+        <th scope="col">Application</th>
+        <th scope="col">DL</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for purchase in object_list %}
+      <tr>
+        <td><a href="{% url 'purchase:purchase-detail' purchase.id %}">{{ purchase.front_partner }}</td>
+        <td>{{ purchase.product }}</td>
+        <td>{{ purchase.quantity }}</td>
+        <td>{{ purchase.price }}</td>
+        <td>{{ purchase.price|mult:purchase.quantity }}</td>
+        <td>{{ purchase.application }}</td>
+        <td>{{ purchase.deadline|date:'y-m' }}</td>
+      </tr>
+{% endfor %}
+  <tfoot>
+    <tr>
+    <th scope="col">Conv</th>
+    <th scope="col">Film</th>
+    <th scope="col">T pa</th>
+    <th scope="col">price</th>
+    <th scope="col">EUR</th>
+    <th scope="col">Application</th>
+    <th scope="col">DL</th>
+  </tr>
+</tfoot>
+</tbody>
+
+   </table>
+
+{% endblock %}

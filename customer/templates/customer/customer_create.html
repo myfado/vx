@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h2>Enter new customer:</h2>
+
+<form action='.' method="post">{% csrf_token %}
+    {{ form | crispy}}
+    <input type="submit" value="Save">
+</form>
+<br>
+<a class="btn btn-outline-info btn-sm" href="{% url 'customer:customer-list' %}">Back to Customer List</a>
+
+
+{% endblock %}

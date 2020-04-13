@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load table_operations %}
+{% block head_title %}{{object.name}}{% endblock %}
+{% block content %}
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Family</th>
+      <th scope="col">Group</th>
+      <th scope="col">Producer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="table-success">{{ object.name }}</td>
+      <td class="table-dark">{{ object.get_family_display }}</td>
+      <td class="table-danger">{{ object.get_group_display }}</td>
+      <td class="table-warning">{{ object.get_producer_display }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4><a href="{{ object.link }}">Press here to see the product</a></h4>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+  <a class="btn btn-outline-warning btn-sm" href="{% url 'product:product-update' object.id %}">Update</a>
+  <a class="btn btn-outline-danger btn-sm" href="{% url 'product:product-delete' object.id %}">Delete</a>
+  <a class="btn btn-outline-info btn-sm" href="{% url 'product:product-list' %}">Product List</a>
+</div>
+</div>
+
+<h4>{{object.name}} business:</h4>
+<table id="mydatatable" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th scope="col">Converter</th>
+      <th scope="col">Enduser</th>
+      <th scope="col">T pa</th>
+      <th scope="col">Price</th>
+      <th scope="col">EUR</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for i in sell_product_list %}
+    <tr>
+      <td>{{ i.sell.converter.name }}</td>
+      <td>{{ i.enduser.name }}</td>
+      <td>{{ i.quantity }}</td>
+      <td>{{ i.price }}</td>
+      <td>{{ i.price|mult:i.quantity }}</td>
+        {% if i.discontinued == True %}
+        <td> discontinued!</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+    </tr>
+{% endfor %}
+</tbody>
+     <tfoot>
+         <tr>
+           <th scope="col">Converter</th>
+           <th scope="col">Enduser</th>
+           <th scope="col">T pa</th>
+           <th scope="col">Price</th>
+           <th scope="col">EUR</th>
+           <th scope="col"></th>
+          </tr>
+     </tfoot>
+ </table>
+
+ <h4>{{object.name}} Projects:</h4>
+ <table id="mydatatable" class="display" style="width:100%">
+   <thead>
+     <tr>
+       <th scope="col">Fr-Part</th>
+       <th scope="col">T pa</th>
+       <th scope="col">Price</th>
+       <th scope="col">Back-par</th>
+       <th scope="col">Application</th>
+       <th></th>
+     </tr>
+   </thead>
+   <tbody>
+ {% for i in proj_product_list %}
+     <tr>
+       <td>{{ i.front_partner.name }}</td>
+       <td>{{ i.quantity }}</td>
+       <td>{{ i.price }}</td>
+       <td>{{ i.back_partner.name }}</td>
+       <td>{{ i.application }}</td>
+       {% if i.discontinued == True %}
+         <td> discontinued!</td>
+         {% else %}
+         <td></td>
+         {% endif %}
+     </tr>
+ {% endfor %}
+ </tbody>
+  </table>
+
+{% endblock %}
